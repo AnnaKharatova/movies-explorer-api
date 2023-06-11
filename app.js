@@ -1,31 +1,31 @@
+require('dotenv').config();
 const express = require('express');
+const helmet = require('helmet');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
-const { createUser, login } = require('./controllers/users');
-const auth = require('./middlewares/auth');
+const routers = require('./routes/index');
+
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const errorHandler = require('./middlewares/errorHandler');
-const { validateSignUp, validateSignIn } = require('./utils/validation');
+const { limiter } = require('./middlewares/rateLimiter');
 
-const { PORT = 3000 } = process.env;
+const { BD_ADDRESS, PORT } = require('./config');
+
 const app = express();
 
-mongoose.connect('mongodb://127.0.0.1/filmsbd', {
+mongoose.connect(BD_ADDRESS, {
   useNewUrlParser: true,
 });
 
 app.use(express.json());
-
 app.use(requestLogger);
 
-app.post('/signup', validateSignUp, createUser);
-app.post('/signin', validateSignIn, login);
+app.use(cors());
+app.use(helmet());
 
-app.use(auth);
-
-app.use('/movies', require('./routes/films'));
-app.use('/users', require('./routes/users'));
-
+app.use(routers);
+app.use(limiter);
 app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);

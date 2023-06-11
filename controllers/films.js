@@ -27,19 +27,27 @@ module.exports.createFilmCard = (req, res, next) => {
 };
 
 module.exports.deleteFilmCard = (req, res, next) => {
-  const { filmId } = req.params;
-  Film.findById(filmId).orFail()
-    .then((film) => {
-      if (req.user._id !== film.owner.toString()) {
-        return next(new ForbiddenError('Попытка удалить чужую карточку с фильмом'));
-      }
-      return film.deleteOne();
+  const userId = req.user._id;
+  const { movieId } = req.params;
+  Film
+    .findById(movieId)
+    .orFail(() => {
+      throw new NotFoundError('Фильм с указанным _id не найден');
     })
-    .then(() => res.send({ message: 'Карточка с фильмом успешно удалена' }))
-    .catch((err) => {
-      if (err.name === 'DocumentNotFoundError') {
-        return next(new NotFoundError('Фильм с указанным _id не найден.'));
+    .then((movie) => {
+      if (movie.owner.toString() === userId) {
+        return Film
+          .findByIdAndRemove(movieId)
+          .then(() => res.send({ message: 'Карточка с фильмом успешно удалена' }))
+          .catch(next);
       }
-      return next(err);
+      throw new ForbiddenError('Попытка удалить чужую карточку с фильмом');
+    })
+    .catch((err) => {
+      if (err.name === 'CastError') {
+        next(new BadRequestError('Переданы некорректные данные'));
+      } else {
+        next(err);
+      }
     });
 };
