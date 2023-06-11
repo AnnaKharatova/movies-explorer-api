@@ -9,7 +9,7 @@ const {
 } = require('../utils/errors/index-errors');
 
 module.exports.getUserProfile = (req, res, next) => {
-  const id = req.params.userId;
+  const id = req.user._id;
   User.findById(id).orFail()
     .then((user) => {
       res.status(200).send(user);
