@@ -24,31 +24,6 @@ module.exports.getUserProfile = (req, res, next) => {
 
 module.exports.updateUserProfile = (req, res, next) => {
   const { name, email } = req.body;
-  const userId = req.user._id;
-
-  User
-    .findByIdAndUpdate(
-      userId,
-      { name, email },
-      { new: true, runValidators: true },
-    )
-    .orFail(() => {
-      throw new NotFoundError('Пользователь по указанному _id не найден');
-    })
-    .then((user) => res.send(user))
-    .catch((err) => {
-      if (err.name === 'ValidationError' || err.name === 'CastError') {
-        throw new BadRequestError(`Переданы некорректные данные при обновлении профиля -- ${err.name}`);
-      } else if (err.code === 11000) {
-        throw new ConflictError('Пользователь с таким email уже существует');
-      } else {
-        next(err);
-      }
-    });
-};
-
-/* module.exports.updateUserProfile = (req, res, next) => {
-  const { name, email } = req.body;
   User.findByIdAndUpdate(req.user._id, { name, email }, { new: true, runValidators: true }).orFail()
     .then((user) => {
       res.send(user);
@@ -59,7 +34,7 @@ module.exports.updateUserProfile = (req, res, next) => {
       }
       return next(err);
     });
-}; */
+};
 
 module.exports.createUser = (req, res, next) => {
   const { name, email, password } = req.body;
