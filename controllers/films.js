@@ -37,7 +37,7 @@ module.exports.deleteFilmCard = (req, res, next) => {
     .then((movie) => {
       if (movie.owner.toString() === userId) {
         return Film
-          .findByIdAndRemove(movieId)
+          .findByIdAndRemove(movieId) /* изменить на deleteOne */
           .then(() => res.send({ message: 'Карточка с фильмом успешно удалена' }))
           .catch(next);
       }

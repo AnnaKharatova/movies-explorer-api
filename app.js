@@ -24,8 +24,8 @@ app.use(requestLogger);
 app.use(cors());
 app.use(helmet());
 
-app.use(routers);
 app.use(limiter);
+app.use(routers);
 app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);

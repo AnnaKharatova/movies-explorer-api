@@ -32,6 +32,9 @@ module.exports.updateUserProfile = (req, res, next) => {
       if (err instanceof mongoose.Error.ValidationError) {
         return next(new BadRequestError('Переданы некорректные данные'));
       }
+      if (err.code === 11000) {
+        return next(new ConflictError('Email уже используется'));
+      }
       return next(err);
     });
 };
