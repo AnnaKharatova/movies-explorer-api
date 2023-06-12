@@ -1,5 +1,6 @@
 # movies-explorer-api
 Бэкенд часть дипломной работы в Яндекс.Практикуме на факультете Веб-разработки
+
 Public IP Address: 158.160.68.196
 Backend: https://api.movies-express.nomoredomains.rocks/singup
 
