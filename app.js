@@ -21,6 +21,14 @@ mongoose.connect(BD_ADDRESS, {
 app.use(express.json());
 app.use(requestLogger);
 
+const corsOptions = {
+  origin: 'https://movies-express.nomoredomains.work',
+  methods: 'GET, POST, PUT, DELETE',
+  allowedHeaders: 'Content-Type, Authorization'
+};
+
+app.use(cors(corsOptions));
+
 app.use(cors());
 app.use(helmet());
 
