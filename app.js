@@ -28,13 +28,22 @@ app.use((req, res, next) => {
   next();
 });
 
-/* const corsOptions = {
-  origin: 'https://movies-express.nomoredomains.work',
-  methods: 'GET, POST, PUT, DELETE',
-  allowedHeaders: 'Content-Type, Authorization'
-}; */
+const allowedCors = [
+  'https://movies-express.nomoredomains.work',
+  'http://movies-express.nomoredomains.work',
+  'http://localhost:3006',
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'http://localhost',
+];
 
-app.use(cors());
+const corsOptions = {
+  origin: allowedCors,
+  methods: 'GET, POST, PUT, DELETE',
+  allowedHeaders: 'Content-Type, Authorization',
+};
+
+app.use(cors(corsOptions));
 app.use(helmet());
 
 app.use(limiter);
