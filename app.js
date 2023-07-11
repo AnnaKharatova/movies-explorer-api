@@ -21,7 +21,7 @@ mongoose.connect(BD_ADDRESS, {
 app.use(express.json());
 app.use(requestLogger);
 
-const allowedCors = [
+/* const allowedCors = [
   'https://movies-express.nomoredomains.work','http://movies-express.nomoredomains.work','http://localhost:3006','http://localhost:3000','http://localhost:3001','http://localhost',
 ];
 
@@ -31,9 +31,9 @@ const corsOptions = [
   "allowedHeaders": 'Accept, Content-Type, Authorization',
   "optionsSuccessStatus": 204,
   "credentials": true,
-];
+]; */
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(helmet());
 
 app.use(limiter);
