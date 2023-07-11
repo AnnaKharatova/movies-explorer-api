@@ -22,10 +22,7 @@ app.use(express.json());
 app.use(requestLogger);
 
 const allowedCors = [
-  'https://movies-express.nomoredomains.work','http://movies-express.nomoredomains.work','http://localhost:3006',
-  'http://localhost:3000',
-  'http://localhost:3001',
-  'http://localhost',
+  'https://movies-express.nomoredomains.work','http://movies-express.nomoredomains.work','http://localhost:3006','http://localhost:3000','http://localhost:3001','http://localhost',
 ];
 
 const corsOptions = {
