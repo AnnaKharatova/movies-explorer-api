@@ -34,7 +34,7 @@ const corsOptions = {
   origin: allowedCors,
   methods: 'GET,POST,PUT,DELETE',
   allowedHeaders: 'Accept, Content-Type, Authorization',
-  optionsSuccessStatus: 204,
+  optionsSuccessStatus: 200,
   credentials: true,
 };
 
