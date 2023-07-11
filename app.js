@@ -30,13 +30,13 @@ const allowedCors = [
   'http://localhost',
 ];
 
-const corsOptions = {
-  origin: allowedCors,
-  methods: 'GET,POST,PUT,DELETE',
-  allowedHeaders: 'Accept, Content-Type, Authorization',
-  optionsSuccessStatus: 200,
-  credentials: true,
-};
+const corsOptions = [
+  "origin": allowedCors,
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "allowedHeaders": 'Accept, Content-Type, Authorization',
+  "optionsSuccessStatus": 204,
+  "credentials": true,
+];
 
 app.use(cors(corsOptions));
 app.use(helmet());
